@@ -1,0 +1,101 @@
+<script>
+  // ===== Fixed Personalization (Already Filled) =====
+  const pageTitle = document.getElementById("pageTitle");
+  const heroLine = document.getElementById("heroLine");
+  const askLine  = document.getElementById("askLine");
+  const statusLine = document.getElementById("statusLine");
+  const letterBox = document.getElementById("letterBox");
+
+  pageTitle.textContent = "A Valentine for Parul 💖";
+  heroLine.textContent = "Hey Parul… I made this little universe just for you 🌙";
+  askLine.textContent  = "Parul, will you be my Valentine? 💘";
+
+  letterBox.textContent =
+`Parul,
+
+Since 2021, somehow life has felt warmer with you in it.
+
+From college corridors…
+to coffee on 28th January 2022…
+to that simple moment when we held hands —
+everything quietly changed for me.
+
+I love the way you say “kiss me”
+the way you touch my ears without realizing
+and how I *still* don’t get your sarcasm —
+but I wouldn’t trade that for anything.
+
+You’re my Sheri.
+You’re my YJHD kind of love —
+comfort, chaos, and feelings that stay.
+
+If there’s rajma chawal,
+if there’s you,
+then honestly… I’m home.
+
+Happy Valentine’s Day ❤️
+
+— Vaishakh`;
+
+  // ===== Floating hearts =====
+  const hearts = document.getElementById("hearts");
+  const heartChars = ["💗","💖","💘","💕","💞","💝"];
+  function spawnHeart(){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+    h.style.left = Math.random()*100 + "vw";
+    h.style.bottom = "-20px";
+    h.style.fontSize = (16 + Math.random()*18) + "px";
+    h.style.animationDuration = (5 + Math.random()*4) + "s";
+    hearts.appendChild(h);
+    setTimeout(()=>h.remove(), 9000);
+  }
+  setInterval(spawnHeart, 450);
+
+  // ===== Confetti =====
+  function burst(){
+    const b = document.createElement("div");
+    b.className = "burst";
+    for(let i=0;i<22;i++){
+      const d = document.createElement("div");
+      d.className = "dot";
+      const a = Math.random()*Math.PI*2;
+      const r = 40 + Math.random()*90;
+      d.style.setProperty("--dx", Math.cos(a)*r+"px");
+      d.style.setProperty("--dy", Math.sin(a)*r+"px");
+      d.style.background = `hsl(${Math.random()*360} 90% 70%)`;
+      b.appendChild(d);
+    }
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(), 900);
+  }
+
+  // ===== Yes / No Logic =====
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn  = document.getElementById("noBtn");
+  const choiceRow = document.getElementById("choiceRow");
+
+  let dodges = 0;
+  function dodgeNo(){
+    dodges++;
+    const maxX = choiceRow.offsetWidth - noBtn.offsetWidth;
+    noBtn.style.position = "absolute";
+    noBtn.style.left = Math.random()*maxX + "px";
+    noBtn.style.top = (Math.random()*10 - 5) + "px";
+
+    if(dodges > 5) noBtn.textContent = "Okay okay 😳";
+    if(dodges > 8) noBtn.textContent = "I give up 💞";
+  }
+
+  noBtn.addEventListener("mouseenter", dodgeNo);
+  noBtn.addEventListener("click", dodgeNo);
+
+  yesBtn.addEventListener("click", ()=>{
+    burst();
+    statusLine.innerHTML =
+      "Status: <strong>YES accepted 💖 (Vaishakh is very happy)</strong>";
+    letterBox.style.display = "block";
+    letterBox.scrollIntoView({behavior:"smooth"});
+  });
+</script>
